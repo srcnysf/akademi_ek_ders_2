@@ -2,6 +2,4 @@
 
 Flutter ile Space X appi
 
-## Getting Started
-
 Rockets ve Launcpads kismi bitmis durumda dileyenler Missions kismini Ödev olarak yapıp ekleyebilirler
