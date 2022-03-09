@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:akademi_ek_ders_2/models/launcpad.dart';
 import 'package:akademi_ek_ders_2/models/rocket.dart';
+import 'package:akademi_ek_ders_2/repository/repository.dart';
 import 'package:akademi_ek_ders_2/ui/launcpads/launcpad_detail.dart';
 import 'package:akademi_ek_ders_2/ui/rockets/rocket_detail_view.dart';
 import 'package:flutter/material.dart';
@@ -15,25 +16,17 @@ class LaunchpadView extends StatefulWidget {
 }
 
 class _LaunchpadViewState extends State<LaunchpadView> {
-  var url = Uri.parse('https://api.spacexdata.com/v4/launchpads');
   List<Launchpad>? launchpads;
-  getRockets() async {
-    var response = await http.get(url);
-    print(response.body.toString());
-    setState(() {
-      launchpads = parseJson(response.body);
-    });
-  }
-
-  List<Launchpad> parseJson(String responseBody) {
-    final parsed = jsonDecode(responseBody);
-    return parsed.map<Launchpad>((json) => Launchpad.fromMap(json)).toList();
-  }
+  Repository _repository = Repository();
 
   @override
-  void initState() {
-    getRockets();
+  initState() {
+    provideLaunchpads();
     super.initState();
+  }
+
+  provideLaunchpads() async {
+    launchpads = await _repository.getLaunchpads();
   }
 
   @override
